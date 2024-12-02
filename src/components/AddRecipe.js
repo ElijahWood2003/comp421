@@ -31,8 +31,23 @@ const AddRecipe = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Data validation
+        const servingAmount = parseInt(form.serving_amount, 10);
         if (!form.name || !form.link || !form.serving_amount || !form.category) {
             alert('All fields must be filled out.');
+            return;
+        }
+
+        if (isNaN(servingAmount) || servingAmount <= 0) {
+            alert('Serving amount must be a positive integer.');
+            return;
+        }
+
+        // Validate link
+        try {
+            new URL(form.link); // Throws if not a valid URL
+        } catch (_) {
+            alert('Please enter a valid URL.');
             return;
         }
 

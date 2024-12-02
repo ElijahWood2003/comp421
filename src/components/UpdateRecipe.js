@@ -30,6 +30,21 @@ const UpdateRecipe = ({ recipeId, navigateHome }) => {
 
     const handleUpdateRecipe = async (e) => {
         e.preventDefault();
+
+        // Validate serving amount
+        const servingAmount = parseInt(form.serving_amount, 10);
+        if (isNaN(servingAmount) || servingAmount <= 0) {
+            alert('Serving amount must be a positive integer.');
+            return;
+        }
+
+        // Validate link
+        try {
+            new URL(form.link); // Throws if the URL is invalid
+        } catch (_) {
+            alert('Please enter a valid URL.');
+            return;
+        }
         try {
             const updatedFields = {
                 name: form.name,
